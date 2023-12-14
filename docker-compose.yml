@@ -1,0 +1,10 @@
+version: "3.3"
+services:
+  login:
+    container_name: user-services
+    image: coderbillzay/user-services
+    ports:
+      - '2010:2010'
+    volumes:
+      - ./:/server
+    restart: always
