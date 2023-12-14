@@ -22,13 +22,13 @@ public class UserService {
          return userRepository.getUser(idUser);
     }
 
-    public boolean updateInformationUser(RequestUpdateDTO request) {
-        var isExistingUser = userRepository.checkUser(request.getIduser());
+    public boolean updateInformationUser(Integer userid,RequestUpdateDTO request) {
+        var isExistingUser = userRepository.checkUser(userid);
         Date date = parseDate(request.getBirthday());
         if(isExistingUser == null){
             return false;
         }
-        userRepository.updateUser(request.getIduser(),request.getFullname(), date,request.getPhone(),request.isGender(),request.getAvatar());
+        userRepository.updateUser(userid,request.getFullname(), date,request.getPhone(),request.isGender(),request.getAvatar());
         return true;
     }
     private Date parseDate(String date) {
