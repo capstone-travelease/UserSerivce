@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
-
+import java.time.LocalDate;
 import java.util.Date;
 
 @Table(name ="Users")
@@ -35,7 +35,7 @@ public class UserEnity {
     private String password;
 
     @Column(name = "dob")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "avatar")
     private String avatar;
