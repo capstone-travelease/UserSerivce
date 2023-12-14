@@ -8,13 +8,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.Date;
 
 @AllArgsConstructor
 @Data
 public class RequestUpdateDTO {
-    @NotNull
-    private Integer iduser;
 
     @NotNull
     @NotBlank
@@ -25,7 +22,9 @@ public class RequestUpdateDTO {
     private String birthday;
 
     @NotNull
-    private Integer phone;
+    @NotBlank
+    private String phone;
+
     private String avatar;
 
     @NotNull

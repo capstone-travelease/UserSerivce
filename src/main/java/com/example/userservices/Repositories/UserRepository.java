@@ -24,5 +24,5 @@ public interface UserRepository extends JpaRepository<UserEnity,Integer> {
     @Query(value = "UPDATE public.users\n" +
             "\tSET gender= ?5, phone_number=?4, dob=?3, avatar=?6, full_name=?2" +
             "\tWHERE users.user_id=?1",nativeQuery = true)
-    void updateUser(Integer iduser, String fullname, Date birthday, Integer phone, boolean gender, String avatar);
+    void updateUser(Integer iduser, String fullname, Date birthday, String phone, boolean gender, String avatar);
 }

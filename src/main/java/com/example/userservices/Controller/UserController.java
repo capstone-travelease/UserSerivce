@@ -32,9 +32,9 @@ public class UserController {
         return  new ResponeDTO(response.getStatus(),userDetail,"OK");
     }
 
-    @PostMapping("/updateuser")
-    public ResponeDTO updateUserInformation(@RequestBody @Valid RequestUpdateDTO request,HttpServletResponse response){
-            var updateUser = userService.updateInformationUser(request);
+    @PutMapping("/updateuser/{userid}")
+    public ResponeDTO updateUserInformation(@PathVariable(value = "userid",required = true) Integer userid,@RequestBody @Valid RequestUpdateDTO request,HttpServletResponse response){
+            var updateUser = userService.updateInformationUser(userid,request);
             if (updateUser){
                 return  new ResponeDTO(response.getStatus(), new HashMap<>(), "OK");
             }
