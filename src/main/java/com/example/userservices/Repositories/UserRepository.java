@@ -22,7 +22,13 @@ public interface UserRepository extends JpaRepository<UserEnity,Integer> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE public.users\n" +
-            "\tSET gender= ?5, phone_number=?4, dob=?3, avatar=?6, full_name=?2" +
+            "\tSET gender= ?5, phone_number=?4, dob=?3, full_name=?2" +
             "\tWHERE users.user_id=?1",nativeQuery = true)
-    void updateUser(Integer iduser, String fullname, Date birthday, String phone, boolean gender, String avatar);
+    void updateUser(Integer iduser, String fullname, Date birthday, String phone, boolean gender);
+
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query(value = "UPDATE public.users SET avatar=?2 WHERE users.user_id=?1 ",nativeQuery = true)
+    void updateImage(Integer iduser,String avatar);
 }

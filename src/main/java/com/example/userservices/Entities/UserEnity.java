@@ -23,7 +23,7 @@ public class UserEnity {
     private String email;
 
     @Column(name = "phone_number")
-    private Integer phone;
+    private String phone;
 
     @Column(name = "full_name")
     private String fullname;
