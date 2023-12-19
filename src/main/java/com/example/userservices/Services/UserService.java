@@ -4,8 +4,6 @@ import com.example.userservices.DTOs.RequestUpdateDTO;
 import com.example.userservices.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.rmi.server.ExportException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,11 +26,26 @@ public class UserService {
         if(isExistingUser == null){
             return false;
         }
-        userRepository.updateUser(userid,request.getFullname(), date,request.getPhone(),request.isGender(),request.getAvatar());
+        userRepository.updateUser(userid,request.getFullname(), date,request.getPhone(),request.isGender());
         return true;
     }
+
+    public boolean updateImage(Integer userid, String image){
+        var isExistingUser = userRepository.checkUser(userid);
+        if (isExistingUser == null){
+            return false;
+        }
+        try {
+            userRepository.updateImage(userid,image);
+            return true;
+        }catch (Exception err){
+            System.err.println(err);
+            return false;
+        }
+
+    }
     private Date parseDate(String date) {
-        String expectedFormate = "MM/dd/yyyy";
+        String expectedFormate = "MM-dd-yyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(expectedFormate);
         try {
             return dateFormat.parse(date);

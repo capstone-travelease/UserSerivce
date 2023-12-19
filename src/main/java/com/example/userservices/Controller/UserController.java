@@ -1,8 +1,7 @@
 package com.example.userservices.Controller;
 
 
-import com.example.userservices.DTOs.RequestUpdateDTO;
-import com.example.userservices.DTOs.ResponeDTO;
+import com.example.userservices.DTOs.*;
 import com.example.userservices.Services.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -27,18 +26,27 @@ public class UserController {
             return  new ResponeDTO(
                     response.getStatus(),userDetail,"NOT_FOUND"
             );
-
         }
         return  new ResponeDTO(response.getStatus(),userDetail,"OK");
     }
 
-    @PutMapping("/updateuser/{userid}")
-    public ResponeDTO updateUserInformation(@PathVariable(value = "userid",required = true) Integer userid,@RequestBody @Valid RequestUpdateDTO request,HttpServletResponse response){
+    @PutMapping("/updateuser")
+    public ResponeUpdateDTO updateUserInformation(@RequestParam(value = "userid",required = true) Integer userid, @RequestBody @Valid RequestUpdateDTO request, HttpServletResponse response){
             var updateUser = userService.updateInformationUser(userid,request);
             if (updateUser){
-                return  new ResponeDTO(response.getStatus(), new HashMap<>(), "OK");
+                return new ResponeUpdateDTO(response.getStatus(),"OK");
             }
             response.setStatus(404);
-            return new ResponeDTO(response.getStatus(),new HashMap<>(),"NOT_FOUND");
+            return new ResponeUpdateDTO(response.getStatus(),"NOT_FOUND");
+    }
+
+    @PatchMapping("/updateimage")
+    public ResponeUpdateDTO updateUserImages(@RequestParam(value = "userid",required = true) Integer userid, @RequestBody RequestUpdateImageDTO request, HttpServletResponse response){
+        boolean isCheckingSuccess = userService.updateImage(userid,request.getImage());
+        if(isCheckingSuccess){
+            return new ResponeUpdateDTO(response.getStatus(),"OK");
+        }
+        response.setStatus(404);
+        return new ResponeUpdateDTO(response.getStatus(),"NOT_FOUND");
     }
 }
