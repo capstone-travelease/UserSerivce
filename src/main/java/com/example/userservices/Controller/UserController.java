@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PatchMapping("/updateimage")
-    public ResponeUpdateDTO updateUserImages(@RequestParam(value = "userid",required = true) Integer userid, @RequestBody RequestUpdateImageDTO request, HttpServletResponse response){
+    public ResponeUpdateDTO updateUserImages(@RequestParam(value = "userid",required = true) Integer userid, @RequestBody @Valid RequestUpdateImageDTO request, HttpServletResponse response){
         boolean isCheckingSuccess = userService.updateImage(userid,request.getImage());
         if(isCheckingSuccess){
             return new ResponeUpdateDTO(response.getStatus(),"OK");
