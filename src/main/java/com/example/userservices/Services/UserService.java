@@ -22,11 +22,11 @@ public class UserService {
 
     public boolean updateInformationUser(Integer userid,RequestUpdateDTO request) {
         var isExistingUser = userRepository.checkUser(userid);
-        Date date = parseDate(request.getBirthday());
+//        Date date = parseDate(request.getBirthday());
         if(isExistingUser == null){
             return false;
         }
-        userRepository.updateUser(userid,request.getFullname(), date,request.getPhone(),request.isGender());
+        userRepository.updateUser(userid,request.getFullname(), request.getBirthday(),request.getPhone(),request.isGender());
         return true;
     }
 
@@ -45,7 +45,7 @@ public class UserService {
 
     }
     private Date parseDate(String date) {
-        String expectedFormate = "MM-dd-yyyy";
+        String expectedFormate = "yyyy-MM-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(expectedFormate);
         try {
             return dateFormat.parse(date);

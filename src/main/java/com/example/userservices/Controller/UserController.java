@@ -33,11 +33,12 @@ public class UserController {
     @PutMapping("/updateuser")
     public ResponeUpdateDTO updateUserInformation(@RequestParam(value = "userid",required = true) Integer userid, @RequestBody @Valid RequestUpdateDTO request, HttpServletResponse response){
             var updateUser = userService.updateInformationUser(userid,request);
-            if (updateUser){
-                return new ResponeUpdateDTO(response.getStatus(),"OK");
+            if (!updateUser){
+                response.setStatus(404);
+                return new ResponeUpdateDTO(response.getStatus(),"NOT_FOUND");
             }
-            response.setStatus(404);
-            return new ResponeUpdateDTO(response.getStatus(),"NOT_FOUND");
+          return new ResponeUpdateDTO(response.getStatus(),"OK");
+
     }
 
     @PatchMapping("/updateimage")
