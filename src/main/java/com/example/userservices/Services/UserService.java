@@ -1,9 +1,13 @@
 package com.example.userservices.Services;
 
+import com.cloudinary.Cloudinary;
 import com.example.userservices.DTOs.RequestUpdateDTO;
 import com.example.userservices.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.management.RuntimeErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +20,8 @@ import java.util.Map;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final Cloudinary cloudinary;
+    private static final int MAX_LENGTH_URL = 48;
     public Map<String,Object> getUser(Integer idUser){
          return userRepository.getUser(idUser);
     }
@@ -30,27 +36,20 @@ public class UserService {
         return true;
     }
 
-    public boolean updateImage(Integer userid, String image){
+    public boolean updateImage(Integer userid, MultipartFile image){
         var isExistingUser = userRepository.checkUser(userid);
         if (isExistingUser == null){
-            return false;
+           return false;
         }
         try {
-            userRepository.updateImage(userid,image);
+            var data = cloudinary.uploader().upload(image.getBytes(),Map.of());
+            String url = (String) data.get("url");
+            String urlUpdate = url.substring(MAX_LENGTH_URL);
+            userRepository.updateImage(userid,urlUpdate);
             return true;
         }catch (Exception err){
-            System.err.println(err);
             return false;
         }
+    }
 
-    }
-    private Date parseDate(String date) {
-        String expectedFormate = "yyyy-MM-dd";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(expectedFormate);
-        try {
-            return dateFormat.parse(date);
-        } catch (ParseException err) {
-            return null;
-        }
-    }
 }
