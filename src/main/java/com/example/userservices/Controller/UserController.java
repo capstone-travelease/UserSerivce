@@ -46,7 +46,7 @@ public class UserController {
 
     }
 
-    @PatchMapping("/updateimage")
+    @PostMapping("/updateimage")
     public ResponeUpdateDTO updateUserImages(@RequestParam(value = "userid",required = true) Integer userid, @RequestParam(value = "image",required = true)  MultipartFile image, HttpServletResponse response){
         if( image.isEmpty() || !validateFileImg(image.getContentType()) ){
             response.setStatus(400);
