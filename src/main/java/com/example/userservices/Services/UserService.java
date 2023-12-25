@@ -44,6 +44,7 @@ public class UserService {
         try {
             var data = cloudinary.uploader().upload(image.getBytes(),Map.of());
             String url = (String) data.get("url");
+            System.err.println(url);
             String urlUpdate = url.substring(MAX_LENGTH_URL);
             userRepository.updateImage(userid,urlUpdate);
             return true;
