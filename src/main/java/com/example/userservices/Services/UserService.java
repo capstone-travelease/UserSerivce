@@ -11,6 +11,7 @@ import javax.management.RuntimeErrorException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -42,7 +43,9 @@ public class UserService {
            return false;
         }
         try {
-            var data = cloudinary.uploader().upload(image.getBytes(),Map.of());
+            Map<String,String> params = new HashMap<>();
+            params.put("folder","CAPSTONES/Users");
+            var data = cloudinary.uploader().upload(image.getBytes(),params);
             String url = (String) data.get("url");
             System.err.println(url);
             String urlUpdate = url.substring(MAX_LENGTH_URL);
